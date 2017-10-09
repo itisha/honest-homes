@@ -12,7 +12,6 @@
 
     <modules>
         <module>honest-homes-webapp</module>
-        <module>boot</module>
         <module>mongodb</module>
     </modules>
 
