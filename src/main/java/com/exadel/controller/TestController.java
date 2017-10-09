@@ -1,4 +1,4 @@
-package com.exadel;
+package com.exadel.controller;
 
 
 import org.springframework.stereotype.Controller;
