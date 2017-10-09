@@ -10,15 +10,10 @@
     <version>1.0-SNAPSHOT</version>
     <name>Honest Homes</name>
 
-    <parent>
-        <groupId>org.springframework.boot</groupId>
-        <artifactId>spring-boot-starter-parent</artifactId>
-        <version>1.5.7.RELEASE</version>
-    </parent>
-
     <modules>
         <module>honest-homes-webapp</module>
         <module>boot</module>
+        <module>mongodb</module>
     </modules>
 
     <properties>
@@ -35,7 +30,13 @@
     <dependencyManagement>
         <dependencies>
             <dependency>
-                <!-- todo: -->
+                <groupId>javax.servlet</groupId>
+                <artifactId>javax.servlet-api</artifactId>
+                <version>${javax.servlet-api.version}</version>
+            </dependency>
+
+            <dependency>
+                <!-- Spring: -->
                 <groupId>org.springframework</groupId>
                 <artifactId>spring-webmvc</artifactId>
                 <version>${springframework.version}</version>
@@ -45,12 +46,6 @@
                         <groupId>commons-logging</groupId>
                     </exclusion>
                 </exclusions>
-            </dependency>
-
-            <dependency>
-                <groupId>javax.servlet</groupId>
-                <artifactId>javax.servlet-api</artifactId>
-                <version>${javax.servlet-api.version}</version>
             </dependency>
 
             <!--Used by spring to convert POJO to JSON-->
@@ -78,21 +73,6 @@
                 <version>${web3j.core.version}</version>
             </dependency>
 
-            <!-- boot/rest/mongo -->
-            <dependency>
-                <groupId>org.springframework.boot</groupId>
-                <artifactId>spring-boot-starter-data-rest</artifactId>
-            </dependency>
-            <dependency>
-                <groupId>org.springframework.boot</groupId>
-                <artifactId>spring-boot-starter-data-mongodb</artifactId>
-            </dependency>
-            <dependency>
-                <groupId>org.springframework.boot</groupId>
-                <artifactId>spring-boot-starter-test</artifactId>
-                <scope>test</scope>
-            </dependency>
-
         </dependencies>
     </dependencyManagement>
 
@@ -111,10 +91,6 @@
                     </configuration>
                 </plugin>
 
-                <plugin>
-                    <groupId>org.springframework.boot</groupId>
-                    <artifactId>spring-boot-maven-plugin</artifactId>
-                </plugin>
 
             </plugins>
         </pluginManagement>
