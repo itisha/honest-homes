@@ -1,12 +1,11 @@
-package com.exadel.mongodb;
+package com.exadel.mongodb.repository;
 
 import com.exadel.mongodb.model.Feedback;
-import org.springframework.data.mongodb.repository.MongoRepository;
+import com.exadel.mongodb.repository.generic.Repository;
 
 import java.util.List;
 
-public interface FeedbackRepository extends MongoRepository<Feedback, String> {
+public interface FeedbackRepository extends Repository<Feedback, String> {
     List<Feedback> findByAuthorId(String landlordId);
-
     List<Feedback> findByEntityId(String landlordId);
 }

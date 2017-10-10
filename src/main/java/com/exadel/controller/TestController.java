@@ -11,6 +11,6 @@ public class TestController {
     @RequestMapping("/")
     @ResponseBody
     String home() {
-        return "Hello World!";
+        return "<p align=\"center\"><b>It's alive!</b></p>";
     }
 }

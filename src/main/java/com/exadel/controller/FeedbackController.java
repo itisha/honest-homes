@@ -1,7 +1,7 @@
 package com.exadel.controller;
 
-import com.exadel.mongodb.FeedbackRepository;
 import com.exadel.mongodb.model.Feedback;
+import com.exadel.mongodb.repository.FeedbackRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
