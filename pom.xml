@@ -6,6 +6,9 @@
     <groupId>com.exadel</groupId>
     <artifactId>honest-homes</artifactId>
     <version>0.0.1-SNAPSHOT</version>
+    <properties>
+        <springfox-swagger2.version>2.7.0</springfox-swagger2.version>
+    </properties>
 
     <parent>
         <groupId>org.springframework.boot</groupId>
@@ -27,6 +30,17 @@
             <groupId>org.springframework.boot</groupId>
             <artifactId>spring-boot-starter-test</artifactId>
             <scope>test</scope>
+        </dependency>
+
+        <dependency>
+            <groupId>io.springfox</groupId>
+            <artifactId>springfox-swagger2</artifactId>
+            <version>${springfox-swagger2.version}</version>
+        </dependency>
+        <dependency>
+            <groupId>io.springfox</groupId>
+            <artifactId>springfox-swagger-ui</artifactId>
+            <version>${springfox-swagger2.version}</version>
         </dependency>
     </dependencies>
 
