@@ -9,7 +9,8 @@ public class Feedback {
     private String authorId;
     private String entityId;
     private String description;
-    private Byte score;
+    private Integer score;
+    private String hashcode;
 
     public String getId() {
         return id;
@@ -43,11 +44,31 @@ public class Feedback {
         this.description = description;
     }
 
-    public Byte getScore() {
+    public Integer getScore() {
         return score;
     }
 
-    public void setScore(Byte score) {
+    public void setScore(Integer score) {
         this.score = score;
+    }
+
+    public String getHashcode() {
+        return hashcode;
+    }
+
+    public void setHashcode(String hashcode) {
+        this.hashcode = hashcode;
+    }
+
+    @Override
+    public String toString() {
+        return "Feedback{" +
+                "id='" + id + '\'' +
+                ", authorId='" + authorId + '\'' +
+                ", entityId='" + entityId + '\'' +
+                ", description='" + description + '\'' +
+                ", score=" + score +
+                ", hashcode='" + hashcode + '\'' +
+                '}';
     }
 }

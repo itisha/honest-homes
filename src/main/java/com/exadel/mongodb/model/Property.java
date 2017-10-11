@@ -3,6 +3,9 @@ package com.exadel.mongodb.model;
 import org.springframework.data.annotation.Id;
 import org.springframework.data.mongodb.core.mapping.Document;
 
+import java.util.LinkedList;
+import java.util.List;
+
 @Document(collection = "property")
 public class Property {
 
@@ -10,7 +13,7 @@ public class Property {
     private String id;
     private String landlordId;
     private String description;
-    private String[] images;
+    private List<String> imageUrls = new LinkedList<>();
 
     public String getId() {
         return id;
@@ -36,12 +39,25 @@ public class Property {
         this.description = description;
     }
 
-    public String[] getImages() {
-        return images;
+    public List<String> getImageUrls() {
+        return imageUrls;
     }
 
-    public void setImages(String[] images) {
-        this.images = images;
+    public void setImageUrls(List<String> imageUrls) {
+        this.imageUrls = imageUrls;
     }
 
+    public boolean addImageUrl(String imageUrl) {
+        return imageUrls.add(imageUrl);
+    }
+
+    @Override
+    public String toString() {
+        return "Property{" +
+                "id='" + id + '\'' +
+                ", landlordId='" + landlordId + '\'' +
+                ", description='" + description + '\'' +
+                ", imageUrls=" + imageUrls +
+                '}';
+    }
 }
