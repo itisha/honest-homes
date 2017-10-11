@@ -85,5 +85,7 @@ public class BasicFlowTest {
         List<Feedback> feedbackList = feedbackService.findByEntityId(foundProperty.getId());
         assertEquals(feedbackList.size(), 1);
         assertEquals(feedback.getAuthorId(), tenant.getId());
+
+        //todo update for methods to search by hash
     }
 }

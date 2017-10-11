@@ -10,7 +10,7 @@ public class Feedback {
     private String entityId;
     private String description;
     private Integer score;
-    private String hashcode;
+    private String sha256Hex;
 
     public String getId() {
         return id;
@@ -52,12 +52,12 @@ public class Feedback {
         this.score = score;
     }
 
-    public String getHashcode() {
-        return hashcode;
+    public String getSha256Hex() {
+        return sha256Hex;
     }
 
-    public void setHashcode(String hashcode) {
-        this.hashcode = hashcode;
+    public void setSha256Hex(String sha256Hex) {
+        this.sha256Hex = sha256Hex;
     }
 
     @Override
@@ -68,7 +68,7 @@ public class Feedback {
                 ", entityId='" + entityId + '\'' +
                 ", description='" + description + '\'' +
                 ", score=" + score +
-                ", hashcode='" + hashcode + '\'' +
+                ", sha256Hex='" + sha256Hex + '\'' +
                 '}';
     }
 }
