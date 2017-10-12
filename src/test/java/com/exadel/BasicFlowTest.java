@@ -1,11 +1,14 @@
 package com.exadel;
 
+import com.exadel.ethereum.api.EthereumService;
 import com.exadel.mongodb.model.Feedback;
 import com.exadel.mongodb.model.Property;
+import com.exadel.mongodb.model.Sha256Hex;
 import com.exadel.mongodb.model.User;
 import com.exadel.mongodb.service.api.FeedbackService;
 import com.exadel.mongodb.service.api.PropertyService;
 import com.exadel.mongodb.service.api.UserService;
+import com.exadel.util.FeedbackUtils;
 import org.junit.Test;
 import org.junit.runner.RunWith;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -32,6 +35,9 @@ public class BasicFlowTest {
     @Autowired
     FeedbackService feedbackService;
 
+    @Autowired
+    EthereumService ethereumService;
+
     @Test
     public void basicIntegrationTest() throws Exception {
         /*
@@ -41,6 +47,7 @@ public class BasicFlowTest {
         3. Create Tenant.
         4. Add visited property to tenant.
         5. Tenant adding Feedback on visited Property.
+        6. Verify hash from ethereum blockchain.
          */
 
         //create landlord:
@@ -61,6 +68,7 @@ public class BasicFlowTest {
         //make sure property id added to landlord:
         landLord = userService.findOne(landLord.getId());
         assertEquals(landLord.getOwnedPropertyIds().get(0), property.getId());
+        assertEquals(landLord.getVisitedPropertyIds().size(), 0);
 
         //create tenant:
         User tenant = new User();
@@ -69,9 +77,10 @@ public class BasicFlowTest {
         tenant = userService.save(tenant);
 
         //add visited property to tenant
-        tenant.addOwnedPropertyId(property.getId());
         tenant.addVisitedPropertyId(property.getId());
         tenant = userService.save(tenant);
+        assertEquals(tenant.getVisitedPropertyIds().size(), 1);
+        assertEquals(tenant.getOwnedPropertyIds().size(), 0);
 
         //add feedback to the visited property:
         Feedback feedback = new Feedback();
@@ -84,8 +93,15 @@ public class BasicFlowTest {
         Property foundProperty = propertyService.findAll().get(0);
         List<Feedback> feedbackList = feedbackService.findByEntityId(foundProperty.getId());
         assertEquals(feedbackList.size(), 1);
+        assertEquals(feedback.getEntityId(), property.getId());
         assertEquals(feedback.getAuthorId(), tenant.getId());
 
-        //todo update for methods to search by hash
+        //hash verification
+        List<Sha256Hex> sha256List = ethereumService.readFullFeedbackSha256HexList();
+        sha256List.forEach(sha -> {
+            Feedback fb = feedbackService.findBySha256Hex(sha.getSha256Hex());
+            assertNotNull(fb);
+            assertEquals(fb.getSha256Hex(), FeedbackUtils.sha256Hex(fb));
+        });
     }
 }

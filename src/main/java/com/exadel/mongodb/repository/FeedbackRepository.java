@@ -10,5 +10,5 @@ public interface FeedbackRepository extends Repository<Feedback, String> {
 
     List<Feedback> findByEntityId(String entityId);
 
-    List<Feedback> findBySha256Hex(String sha256Hex);
+    Feedback findBySha256Hex(String sha256Hex);
 }

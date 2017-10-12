@@ -6,7 +6,10 @@ import java.util.List;
 
 public interface FeedbackService extends Service<Feedback, String> {
     List<Feedback> findByAuthorId(String authorId);
+
     List<Feedback> findByEntityId(String entityId);
 
-    List<Feedback> findBySha256Hex(String sha256Hex);
+    Feedback findBySha256Hex(String sha256Hex);
+
+    String getDataBall(String feedbackId);
 }

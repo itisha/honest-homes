@@ -9,11 +9,15 @@ public class FeedbackUtils {
         if (feedback.getId() == null) {
             throw new RuntimeException("Feedback should be stored in db and have id");
         }
-        String dataBall = feedback.getId() +
+        String dataBall = getDataBall(feedback);
+        return DigestUtils.sha256Hex(dataBall);
+    }
+
+    public static String getDataBall(Feedback feedback) {
+        return feedback.getId() +
                 feedback.getAuthorId() +
                 feedback.getEntityId() +
                 feedback.getDescription() +
                 feedback.getScore();
-        return DigestUtils.sha256Hex(dataBall);
     }
 }

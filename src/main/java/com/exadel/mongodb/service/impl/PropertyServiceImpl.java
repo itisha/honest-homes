@@ -34,21 +34,15 @@ public class PropertyServiceImpl extends AbstractService<Property, String> imple
                     "Landlord id must be provided.");
         }
 
-        User owner = findOwner(property);
-        property.setLandlordId(owner.getId());
-        Property saved = super.save(property);
+        User owner = userService.findOne(property.getLandlordId());
+        if (owner == null) {
+            throw new RuntimeException("Owner not found.");
+        }
 
+        Property saved = super.save(property);
         owner.addOwnedPropertyId(saved.getId());
         userService.save(owner);
         return saved;
-    }
-
-    private User findOwner(Property entity) {
-        User owner = userService.findOne(entity.getLandlordId());
-        if (owner == null) {
-            throw new RuntimeException("Owner does not exist.");
-        }
-        return owner;
     }
 
     private PropertyRepository getRepositoryInstance() {
