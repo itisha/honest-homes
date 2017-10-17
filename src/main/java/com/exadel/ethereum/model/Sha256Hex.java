@@ -1,4 +1,4 @@
-package com.exadel.mongodb.model;
+package com.exadel.ethereum.model;
 
 public class Sha256Hex {
 

@@ -1,6 +1,6 @@
 package com.exadel.ethereum.api;
 
-import com.exadel.mongodb.model.Sha256Hex;
+import com.exadel.ethereum.model.Sha256Hex;
 
 import java.util.List;
 

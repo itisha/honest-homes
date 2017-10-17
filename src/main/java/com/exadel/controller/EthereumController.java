@@ -1,7 +1,7 @@
 package com.exadel.controller;
 
 import com.exadel.ethereum.api.EthereumService;
-import com.exadel.mongodb.model.Sha256Hex;
+import com.exadel.ethereum.model.Sha256Hex;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;

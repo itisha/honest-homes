@@ -1,9 +1,9 @@
 package com.exadel;
 
 import com.exadel.ethereum.api.EthereumService;
+import com.exadel.ethereum.model.Sha256Hex;
 import com.exadel.mongodb.model.Feedback;
 import com.exadel.mongodb.model.Property;
-import com.exadel.mongodb.model.Sha256Hex;
 import com.exadel.mongodb.model.User;
 import com.exadel.mongodb.service.api.FeedbackService;
 import com.exadel.mongodb.service.api.PropertyService;
@@ -35,6 +35,7 @@ public class BasicFlowTest {
     @Autowired
     FeedbackService feedbackService;
 
+    //TODO: mock service for test
     @Autowired
     EthereumService ethereumService;
 

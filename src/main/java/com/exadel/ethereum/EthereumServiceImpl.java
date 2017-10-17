@@ -2,7 +2,9 @@ package com.exadel.ethereum;
 
 import com.exadel.ethereum.api.EthereumService;
 import com.exadel.ethereum.contractwrapper.HashArray;
-import com.exadel.mongodb.model.Sha256Hex;
+import com.exadel.ethereum.model.Sha256Hex;
+import com.exadel.mongodb.model.ContractDetails;
+import com.exadel.mongodb.repository.EthereumContractRepository;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -14,7 +16,7 @@ import org.web3j.abi.datatypes.generated.Uint256;
 import org.web3j.crypto.Credentials;
 import org.web3j.protocol.Web3j;
 
-import java.io.IOException;
+import java.math.BigInteger;
 import java.util.ArrayList;
 import java.util.LinkedList;
 import java.util.List;
@@ -30,18 +32,12 @@ public class EthereumServiceImpl implements EthereumService {
     private static final Logger LOGGER = LoggerFactory.getLogger(EthereumServiceImpl.class);
 
     private HashArray contract;
+    private EthereumContractRepository ethereumContractRepository;
 
     @Autowired
-    public EthereumServiceImpl(Credentials credentials, Web3j web3j, Environment environment) {
-        contract = HashArray.load(environment.getProperty("eth.geth.contract.address"), web3j, credentials, GAS_PRICE, GAS_LIMIT);
-        try {
-            if (!contract.isValid()) {
-                LOGGER.error("For some reason the contract is not valid, but works anyway.");
-            }
-        } catch (IOException e) {
-            LOGGER.error("Unable to connect to web3 node." + e.getMessage());
-            throw new RuntimeException(e);
-        }
+    public EthereumServiceImpl(Environment environment, Credentials credentials, Web3j web3j, EthereumContractRepository ethereumContractRepository) {
+        this.ethereumContractRepository = ethereumContractRepository;
+        initContract(environment, credentials, web3j, ethereumContractRepository);
     }
 
     @Override
@@ -76,5 +72,41 @@ public class EthereumServiceImpl implements EthereumService {
         if (StringUtils.isEmpty(sha256Hex)) {
             throw new RuntimeException("Must be a valid sha256 hash.");
         }
+    }
+
+    private void initContract(Environment environment, Credentials credentials, Web3j web3j, EthereumContractRepository ethereumContractRepository) {
+        String contractAddress = getDeployedContractAddress(environment, ethereumContractRepository);
+        if (contractAddress == null) {
+            contract = deployContract(web3j, credentials);
+        } else {
+            contract = HashArray.load(contractAddress, web3j, credentials, GAS_PRICE, GAS_LIMIT);
+        }
+    }
+
+    private String getDeployedContractAddress(Environment environment, EthereumContractRepository ethereumContractRepository) {
+        String contractAddress = environment.getProperty("eth.geth.contract.address");
+        if (contractAddress == null) {
+            List<ContractDetails> all = ethereumContractRepository.findAll();
+            if (all.size() == 1) {
+                contractAddress = all.get(0).getContractAddress();
+            }
+            if (all.size() > 1) {
+                throw new RuntimeException("Expected 1 contract record, but got " + all.size() + ". The contract should only be deployed only once.");
+            }
+        }
+        return contractAddress;
+    }
+
+    private HashArray deployContract(Web3j web3j, Credentials credentials) {
+        HashArray contract;
+        Future<HashArray> deploy = HashArray.deploy(web3j, credentials, GAS_PRICE, GAS_LIMIT, BigInteger.ZERO);
+        try {
+            contract = deploy.get();
+            ethereumContractRepository.save(new ContractDetails(contract.getContractAddress()));
+        } catch (InterruptedException | ExecutionException e) {
+            LOGGER.error("Error deploying contract. " + e.getMessage());
+            throw new RuntimeException("Error deploying contract.", e);
+        }
+        return contract;
     }
 }
