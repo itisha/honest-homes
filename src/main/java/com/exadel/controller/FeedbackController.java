@@ -45,16 +45,6 @@ public class FeedbackController {
         return new ResponseEntity<List<Feedback>>(feedbackService.findByEntityId(landlordId), HttpStatus.OK);
     }
 
-    @RequestMapping(value = "/sha256/{sha256Hex}", method = RequestMethod.GET, produces = "application/json")
-    public ResponseEntity findBySha256Hex(@PathVariable("sha256Hex") String sha256Hex) {
-        return new ResponseEntity<Feedback>(feedbackService.findBySha256Hex(sha256Hex), HttpStatus.OK);
-    }
-
-    @RequestMapping(value = "/id/{feedbackId}/databall", method = RequestMethod.GET, produces = "application/json")
-    public ResponseEntity getDataBall(@PathVariable("feedbackId") String feedbackId) {
-        return new ResponseEntity<String>(feedbackService.getDataBall(feedbackId), HttpStatus.OK);
-    }
-
     @RequestMapping(value = "/", method = RequestMethod.POST, produces = "application/json")
     public ResponseEntity create(@RequestBody Feedback property) {
         return new ResponseEntity<Feedback>(feedbackService.save(property), HttpStatus.CREATED);

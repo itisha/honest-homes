@@ -5,7 +5,6 @@ import com.exadel.mongodb.model.Feedback;
 import com.exadel.mongodb.repository.FeedbackRepository;
 import com.exadel.mongodb.service.api.AbstractService;
 import com.exadel.mongodb.service.api.FeedbackService;
-import com.exadel.util.FeedbackUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
@@ -35,22 +34,8 @@ public class FeedbackServiceImpl extends AbstractService<Feedback, String> imple
     @Override
     public Feedback save(Feedback feedback) {
         feedback = super.save(feedback);
-        String sha256Hex = FeedbackUtils.sha256Hex(feedback);
-        feedback.setSha256Hex(sha256Hex);
-        ethereumService.storeFeedbackSha256Hex(sha256Hex);
+        ethereumService.storeFeedbackSha256Hex(feedback);
         return super.save(feedback);
-    }
-
-    @Override
-    public Feedback findBySha256Hex(String sha256Hex) {
-        return getRepositoryInstance().findBySha256Hex(sha256Hex);
-    }
-
-
-    @Override
-    public String getDataBall(String feedbackId) {
-        Feedback feedback = findOne(feedbackId);
-        return FeedbackUtils.getDataBall(feedback);
     }
 
     private FeedbackRepository getRepositoryInstance() {

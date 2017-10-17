@@ -2,20 +2,20 @@ package com.exadel.ethereum.model;
 
 public class Sha256Hex {
 
-    private Long id;
+    private String feedbackId;
     private String sha256Hex;
 
-    public Sha256Hex(Long id, String sha256Hex) {
-        this.id = id;
+    public Sha256Hex(String feedbackId, String sha256Hex) {
+        this.feedbackId = feedbackId;
         this.sha256Hex = sha256Hex;
     }
 
-    public Long getId() {
-        return id;
+    public String getFeedbackId() {
+        return feedbackId;
     }
 
-    public void setId(Long id) {
-        this.id = id;
+    public void setFeedbackId(String feedbackId) {
+        this.feedbackId = feedbackId;
     }
 
     public String getSha256Hex() {
@@ -29,7 +29,7 @@ public class Sha256Hex {
     @Override
     public String toString() {
         return "Sha256Hex{" +
-                "id='" + id + '\'' +
+                "feedbackId='" + feedbackId + '\'' +
                 ", sha256Hex='" + sha256Hex + '\'' +
                 '}';
     }
