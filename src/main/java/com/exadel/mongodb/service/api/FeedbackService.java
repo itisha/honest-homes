@@ -8,8 +8,4 @@ public interface FeedbackService extends Service<Feedback, String> {
     List<Feedback> findByAuthorId(String authorId);
 
     List<Feedback> findByEntityId(String entityId);
-
-    Feedback findBySha256Hex(String sha256Hex);
-
-    String getDataBall(String feedbackId);
 }

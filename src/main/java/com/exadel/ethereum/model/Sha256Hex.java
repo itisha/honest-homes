@@ -1,25 +1,21 @@
-package com.exadel.mongodb.model;
+package com.exadel.ethereum.model;
 
-import org.springframework.data.annotation.Id;
-import org.springframework.data.mongodb.core.mapping.Document;
-
-@Document(collection = "sha256hex")
 public class Sha256Hex {
 
-    @Id
-    private String id;
+    private String feedbackId;
     private String sha256Hex;
 
-    public Sha256Hex(String sha256Hex) {
+    public Sha256Hex(String feedbackId, String sha256Hex) {
+        this.feedbackId = feedbackId;
         this.sha256Hex = sha256Hex;
     }
 
-    public String getId() {
-        return id;
+    public String getFeedbackId() {
+        return feedbackId;
     }
 
-    public void setId(String id) {
-        this.id = id;
+    public void setFeedbackId(String feedbackId) {
+        this.feedbackId = feedbackId;
     }
 
     public String getSha256Hex() {
@@ -33,7 +29,7 @@ public class Sha256Hex {
     @Override
     public String toString() {
         return "Sha256Hex{" +
-                "id='" + id + '\'' +
+                "feedbackId='" + feedbackId + '\'' +
                 ", sha256Hex='" + sha256Hex + '\'' +
                 '}';
     }

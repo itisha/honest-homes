@@ -1,7 +1,9 @@
 package com.exadel.mongodb.model;
 
 import org.springframework.data.annotation.Id;
+import org.springframework.data.mongodb.core.mapping.Document;
 
+@Document(collection = "feedback")
 public class Feedback {
 
     @Id
@@ -10,7 +12,6 @@ public class Feedback {
     private String entityId;
     private String description;
     private Integer score;
-    private String sha256Hex;
 
     public String getId() {
         return id;
@@ -52,14 +53,6 @@ public class Feedback {
         this.score = score;
     }
 
-    public String getSha256Hex() {
-        return sha256Hex;
-    }
-
-    public void setSha256Hex(String sha256Hex) {
-        this.sha256Hex = sha256Hex;
-    }
-
     @Override
     public String toString() {
         return "Feedback{" +
@@ -68,7 +61,6 @@ public class Feedback {
                 ", entityId='" + entityId + '\'' +
                 ", description='" + description + '\'' +
                 ", score=" + score +
-                ", sha256Hex='" + sha256Hex + '\'' +
                 '}';
     }
 }

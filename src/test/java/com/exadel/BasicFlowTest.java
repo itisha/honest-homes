@@ -1,14 +1,16 @@
 package com.exadel;
 
 import com.exadel.ethereum.api.EthereumService;
+import com.exadel.ethereum.model.Sha256Hex;
 import com.exadel.mongodb.model.Feedback;
 import com.exadel.mongodb.model.Property;
-import com.exadel.mongodb.model.Sha256Hex;
 import com.exadel.mongodb.model.User;
 import com.exadel.mongodb.service.api.FeedbackService;
 import com.exadel.mongodb.service.api.PropertyService;
 import com.exadel.mongodb.service.api.UserService;
-import com.exadel.util.FeedbackUtils;
+import com.google.gson.Gson;
+import com.google.gson.GsonBuilder;
+import org.apache.commons.codec.digest.DigestUtils;
 import org.junit.Test;
 import org.junit.runner.RunWith;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -35,6 +37,7 @@ public class BasicFlowTest {
     @Autowired
     FeedbackService feedbackService;
 
+    //TODO: mock service for tests since it does not see the contract address stored in mongodb and deploys a new one
     @Autowired
     EthereumService ethereumService;
 
@@ -98,10 +101,12 @@ public class BasicFlowTest {
 
         //hash verification
         List<Sha256Hex> sha256List = ethereumService.readFullFeedbackSha256HexList();
+        Gson gson = new GsonBuilder().create();
         sha256List.forEach(sha -> {
-            Feedback fb = feedbackService.findBySha256Hex(sha.getSha256Hex());
+            Feedback fb = feedbackService.findOne(sha.getFeedbackId());
             assertNotNull(fb);
-            assertEquals(fb.getSha256Hex(), FeedbackUtils.sha256Hex(fb));
+            String json = gson.toJson(fb);
+            assertEquals(sha.getSha256Hex(), DigestUtils.sha256Hex(json));
         });
     }
 }
