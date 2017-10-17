@@ -1,24 +1,20 @@
 package com.exadel.mongodb.model;
 
-import org.springframework.data.annotation.Id;
-import org.springframework.data.mongodb.core.mapping.Document;
-
-@Document(collection = "sha256hex")
 public class Sha256Hex {
 
-    @Id
-    private String id;
+    private Long id;
     private String sha256Hex;
 
-    public Sha256Hex(String sha256Hex) {
+    public Sha256Hex(Long id, String sha256Hex) {
+        this.id = id;
         this.sha256Hex = sha256Hex;
     }
 
-    public String getId() {
+    public Long getId() {
         return id;
     }
 
-    public void setId(String id) {
+    public void setId(Long id) {
         this.id = id;
     }
 

@@ -13,6 +13,7 @@
         <aspectjweaver.version>1.8.11</aspectjweaver.version>
         <de.flapdoodle.embed.mongo.version>2.0.0</de.flapdoodle.embed.mongo.version>
         <commons-codec.version>1.10</commons-codec.version>
+        <web3j.core.version>2.3.1</web3j.core.version>
     </properties>
 
     <parent>
@@ -73,6 +74,13 @@
             <groupId>commons-codec</groupId>
             <artifactId>commons-codec</artifactId>
             <version>${commons-codec.version}</version>
+        </dependency>
+
+        <!-- https://mvnrepository.com/artifact/org.web3j/core -->
+        <dependency>
+            <groupId>org.web3j</groupId>
+            <artifactId>core</artifactId>
+            <version>${web3j.core.version}</version>
         </dependency>
 
     </dependencies>
