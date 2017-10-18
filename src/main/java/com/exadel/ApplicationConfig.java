@@ -36,9 +36,7 @@ public class ApplicationConfig {
         try {
             credentials = WalletUtils.loadCredentials(
                     environment.getProperty("eth.geth.account.password"),
-                    WalletUtils.getDefaultKeyDirectory() +
-                            environment.getProperty("eth.geth.base.data.dir") +
-                            environment.getProperty("eth.geth.account.filename"));
+                    environment.getProperty("eth.geth.account.file"));
         } catch (IOException | CipherException e) {
             LOGGER.error("Unable to load Ethereum credentials." + e.getMessage());
             throw new RuntimeException(e);

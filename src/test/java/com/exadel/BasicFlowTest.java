@@ -24,6 +24,7 @@ import java.util.List;
 import static org.junit.Assert.assertEquals;
 import static org.junit.Assert.assertNotNull;
 
+//The test will fail unless local Geth node is configured correctly
 @Ignore
 @RunWith(SpringRunner.class)
 @SpringBootTest
@@ -38,7 +39,6 @@ public class BasicFlowTest {
     @Autowired
     FeedbackService feedbackService;
 
-    //TODO: mock service for tests since it does not see the contract address stored in mongodb and deploys a new one
     @Autowired
     EthereumService ethereumService;
 
