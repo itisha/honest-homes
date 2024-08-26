@@ -9,7 +9,7 @@
     <properties>
         <maven.compiler.source>1.8</maven.compiler.source>
         <maven.compiler.target>1.8</maven.compiler.target>
-        <springfox-swagger2.version>2.7.0</springfox-swagger2.version>
+        <springfox-swagger2.version>2.10.0</springfox-swagger2.version>
         <aspectjweaver.version>1.8.11</aspectjweaver.version>
         <de.flapdoodle.embed.mongo.version>2.0.0</de.flapdoodle.embed.mongo.version>
         <commons-codec.version>1.10</commons-codec.version>
